@@ -39,7 +39,7 @@ public class BaseTests {
 
     @BeforeMethod
     public void testsSetup() {
-        String profilePath = System.getenv("APPDATA") + "\\Mozilla\\Firefox\\Profiles\\" + "16jn7mwq.default-release";
+        String profilePath = System.getenv("APPDATA") + "\\Mozilla\\Firefox\\Profiles\\" + "4rtfcuiu.default-release";
 
         // Create FirefoxOptions and set profile
         FirefoxOptions options = new FirefoxOptions();

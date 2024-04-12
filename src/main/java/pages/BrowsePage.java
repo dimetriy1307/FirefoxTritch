@@ -8,7 +8,7 @@ public class BrowsePage extends BasePage{
     public BrowsePage(WebDriver driver) {
         super(driver);
     }
-    private static int count = 0;
+    private static int count = 130;
     private static final String LANBUAGE_BUTTON="//div[@class='ScCoreButtonLabel-sc-s7h2b7-0 ijUtjZ']//div[text()='Language']";
     private static final String LANBUAGE_BUTTON_UKR="//div[text()='Українська']";
     private static final String BROWSE_HEADLINE="//h1[text()='Browse']";

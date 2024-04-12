@@ -21,14 +21,23 @@ public class ChannelPage extends BasePage {
     private static final String FOLLOWERS_ONLY_CHAT = "//p[text()='Followers-Only Chat']";
     private static final String OFFLINE_TAG = "//p[text()='Offline']";
     private static final String CHAT_RULES_BUTTON = "//button[@class='ScCoreButton-sc-ocjdkq-0 ScCoreButtonPrimary-sc-ocjdkq-1 kGYojv gmCwLG']";
+private static final String INTRODUCE_YOURSELF="//p[text()='Introduce yourself!']";
+    private static final String RULES="//p[text()='Introduce yourself!']";
 
+private static final String INTRODUCE_YOURSELF_CONTINUE_TO_CHAT_BUTTON="//p[text()='Continue to chat']";
     public void sendMessageToChat() {
         driver.findElement(By.xpath(TWITCH_CHAT_WINDOW)).click();
         for (int i = 0; i < TWITCH_MESSAGE_LINK.length(); i++) {
             char currentChar = TWITCH_MESSAGE_LINK.charAt(i);
             driver.findElement(By.xpath(TWITCH_CHAT_WINDOW)).sendKeys(Character.toString(currentChar)); // Отправка текущего символа
             try {
-                Thread.sleep(20); // Пауза между отправкой символов (можно настроить по вашему усмотрению)
+                Thread.sleep(10); // Пауза между отправкой символов (можно настроить по вашему усмотрению)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                Thread.sleep(2000); // Пауза после ввода символов
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -46,6 +55,12 @@ public class ChannelPage extends BasePage {
     public void chatRulesButtonShown() {
         try {
             driver.findElement(By.xpath(TWITCH_CHAT_WINDOW)).click();
+            try {
+                Thread.sleep(3000); // Приостановка выполнения потока на 10 секунд
+            } catch (InterruptedException e) {
+                // Обработка исключения, если поток был прерван
+                e.printStackTrace();
+            }
             if (driver.findElement(By.xpath(CHAT_RULES_BUTTON)).isDisplayed()) {
                 driver.findElement(By.xpath(CHAT_RULES_BUTTON)).click();
             }
@@ -53,6 +68,7 @@ public class ChannelPage extends BasePage {
             return;
         }
     }
+
 
     public void verifyIfStreamIsOn() {
         try {
@@ -105,7 +121,21 @@ public class ChannelPage extends BasePage {
             driver.close();
         }
     }
+    public void IntroduceYourself(){
+        driver.findElement(By.xpath(TWITCH_CHAT_WINDOW)).click();
+        if(isElementDisplayed(INTRODUCE_YOURSELF)){
+            driver.findElement(By.xpath(INTRODUCE_YOURSELF_CONTINUE_TO_CHAT_BUTTON)).click();
+        }
+    }
 
+    public void handleChatWindow() {
+        driver.findElement(By.xpath(TWITCH_CHAT_WINDOW)).click();
+        if (isElementDisplayed(CHAT_RULES_BUTTON)) {
+            driver.findElement(By.xpath(CHAT_RULES_BUTTON)).click();
+        } else if (isElementDisplayed(INTRODUCE_YOURSELF)) {
+            driver.findElement(By.xpath(INTRODUCE_YOURSELF_CONTINUE_TO_CHAT_BUTTON)).click();
+        }
+    }
     private boolean isElementDisplayed(String xpath) {
         try {
             return driver.findElement(By.xpath(xpath)).isDisplayed();
